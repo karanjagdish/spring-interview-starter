@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: interview
+  datasource:
+    url: jdbc:h2:mem:test  # In-memory H2 database
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    initialization-mode: always # Ensures Flyway runs at startup
+  jpa:
+    hibernate:
+      ddl-auto: none  # Flyway manages schema; no Hibernate auto-DDL
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true  # Enables the H2 console for debugging
+      path: /h2-console  # Default console path
+
+flyway:
+  enabled: true
+  baseline-on-migrate: true # Ensures Flyway can handle empty or pre-existing DB
+  locations: classpath:db/migration # Directory for migration scripts
+
+logging:
+  level:
+    org:
+      springframework:
+        flyway: DEBUG  # Enables detailed Flyway logs during migrations
